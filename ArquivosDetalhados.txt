@@ -1,0 +1,35 @@
+Arquivos:
+
+$ teststart2.sh
+	- Chama os comandos que inicializarao o arquivo de topologia programado
+
+$ populate_tables2.sh
+	- Popula as tabelas do plano de controle
+
+$ swap_route.sh
+	- Modifica algumas entradas da tabela do plano de controle para que a rota que os pacotes percorrem possa ser alterada
+
+$ commandss1_test.txt
+  commandss2_test.txt
+  commandss3_test.txt
+  commandss4_test.txt
+  	- Sao os arquivos que descrevem os comandos a serem inicialmente inseridos
+  	nas tabelas dos switches cujo nome estao presentes nos nomes desses 
+  	arquivos
+
+$ topoteste.py
+	- Arquivo contendo a topologia utilizada nos testes
+
+$ router.p4
+	- Arquivo em P4 contendo o codigo com o programa P4 executado em cada um dos switches
+
+$ router.json
+	- Arquivo compilado do router, no formato JSON, para ser inserido no switch.
+
+$ send.py
+	- Programa executado no host Fonte, com o intuito de se comunicar com o host Sorvedouro para
+	realizar as medicoes de latencia nas rotas da rede 
+
+$ receive.py
+	- Programa executado no host Sorvedouro, com o intuito de se comunicar com o host Fonte para
+	realizar as medicoes de latencia das rotas da rede 
