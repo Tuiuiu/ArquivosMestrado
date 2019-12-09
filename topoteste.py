@@ -32,7 +32,7 @@ parser.add_argument('--behavioral-exe', help='Path to behavioral executable',
 parser.add_argument('--thrift-port', help='Thrift server port for table updates',
                     type=int, action="store", default=9090)
 parser.add_argument('--num-hosts', help='Number of hosts to connect to switch',
-                    type=int, action="store", default=4)
+                    type=int, action="store", default=6)
 parser.add_argument('--mode', choices=['l2', 'l3'], type=str, default='l3')
 parser.add_argument('--json', help='Path to JSON config file',
                     type=str, action="store", required=True)
@@ -43,7 +43,6 @@ args = parser.parse_args()
 
 
 class TestFourSwitches(Topo):
-    "Test four switches connected to n (< 256) hosts."
     def __init__(self, sw_path, json_path, thrift_port, pcap_dump, n, **opts):
         # Initialize topology and default options
         Topo.__init__(self, **opts)
@@ -84,12 +83,13 @@ class TestFourSwitches(Topo):
         host4 = self.addHost('h4', 
                             ip = "10.0.3.10/24",
                             mac='00:04:00:00:00:03')
-        hostfonte = self.addHost('fonte',
-                                ip = "10.0.0.20",
-                                mac='00:04:00:00:00:20')
-        hostsorve = self.addHost('sorve',
-                                ip = "10.0.0.21",
-                                mac='00:04:00:00:00:21')
+        hostfonte = self.addHost('h5',
+                                ip = "10.0.4.10/24",
+                                mac='00:04:00:00:00:04',
+                                inNamespace=False)
+        hostsorve = self.addHost('h6',
+                                ip = "10.0.5.10/24",
+                                mac='00:04:00:00:00:05')
         self.addLink(host1, switch1)
         self.addLink(host2, switch1)
         self.addLink(switch1, switchmeio1, delay="10ms")
@@ -117,6 +117,7 @@ def main():
                   switch = P4Switch,
                   controller = None)
     net.start()
+
 
 
     sw_mac = ["00:aa:bb:00:00:%02x" % n for n in xrange(num_hosts)]
